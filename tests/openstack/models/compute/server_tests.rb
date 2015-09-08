@@ -23,10 +23,16 @@ Shindo.tests("Fog::Compute[:openstack] | server", ['openstack']) do
       returns( ["192.168.11.3"] ) { server.floating_ip_addresses }
     end
 
+    my_group = fog.security_groups.create(
+      :name        => 'my_group',
+      :description => 'my group'
+    )
+
     tests('#security_groups').succeeds do
       fog = Fog::Compute[:openstack]
 
       begin
+        my_group.destroy if my_group
         my_group = fog.security_groups.create(:name => 'my_group',
                                               :description => 'my group')
 

@@ -9,6 +9,8 @@ Shindo.tests("Fog::Compute[:openstack] | security_group", ['openstack']) do
       )
 
       tests('#create').succeeds do
+        security_group.destroy if security_group
+
         security_group = fog.security_groups.create(
           :name        => 'my_group',
           :description => 'my group'
@@ -28,7 +30,7 @@ Shindo.tests("Fog::Compute[:openstack] | security_group", ['openstack']) do
             :ip_protocol     => 'tcp',
             :from_port       => 1234,
             :to_port         => 1234,
-            :ip_range        => { "cidr" => "0.0.0.0/0" }
+            :ip_range        => { "cidr" => "0.0.0.0/20" }
           )
           returns(true, "added security group rule") { security_group.security_group_rules.count == (rules_count + 1) }
           security_group_rule = security_group.security_group_rules.find { |r| r.id == rule.id }
