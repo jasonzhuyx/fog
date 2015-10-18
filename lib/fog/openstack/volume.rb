@@ -41,10 +41,14 @@ module Fog
       request :list_zones
 
       request :list_volume_types
+      request :create_volume_type
+      request :update_volume_type
+      request :delete_volume_type
       request :get_volume_type_details
 
       request :create_volume_snapshot
       request :list_snapshots
+      request :list_snapshots_detailed
       request :get_snapshot_details
       request :delete_snapshot
 
@@ -58,6 +62,8 @@ module Fog
       request :update_quota
       request :get_quota
       request :get_quota_defaults
+
+      request :get_quota_usage
 
       request :set_tenant
 

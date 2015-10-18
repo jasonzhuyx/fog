@@ -35,6 +35,11 @@ module Fog
           service.update_stack(self, default_options).body['stack']
         end
 
+        def patch(options = {})
+          requires :stack_name
+          service.patch_stack(self, options).body['stack']
+        end
+
         def delete
           service.delete_stack(self)
         end
@@ -45,7 +50,7 @@ module Fog
         end
 
         def resources(options={})
-          @resources ||= service.resources.all(self, options)
+          @resources ||= service.resources.all({:stack => self}.merge(options))
         end
 
         def events(options={})
